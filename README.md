@@ -41,7 +41,9 @@ DISTRIB_DESCRIPTION="Ubuntu 24.04.5 LTS"
 ```
 
 https://hub.docker.com/repository/docker/staint/custom-nginx/general
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/1.png)
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/2.png)
 
 ## Задача 2
@@ -83,8 +85,11 @@ docker rename "Shevlyakov_AE-custom-nginx-t2" custom-nginx-t2
 ### Решение
 
 ![image](https://github.com/staintru/Docker-nginx/blob/main/4.png)
+
 Сменив внутренний порт в контейнере с 80 на 81 и перечитав конфигурацию NGINX начал работать на новом 81 порту в контейнере, но мапинг внешнего 8080 порта мы не меняли, он по прежнему ссылается на 80 порт а там ничего нет.
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/5.png)
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/6.png)
 
 ## Задача 4
@@ -157,6 +162,11 @@ services:
 ![image](https://github.com/staintru/Docker-nginx/blob/main/8.png)
 ![image](https://github.com/staintru/Docker-nginx/blob/main/9.png)
 ![image](https://github.com/staintru/Docker-nginx/blob/main/11.png)
+
+В старых версиях Docker Compose это поле было обязательным — оно указывало, какую версию формата Compose использовать.
+В современном Docker Compose (команда docker compose без дефиса) это поле больше не нужно. Docker Compose сам определяет спецификацию автоматически по структуре файла. Если поле version осталось — оно просто игнорируется, но при каждом запуске выводится это предупреждение .
+Нужно просто удалить строку version: '...' из файла docker-compose.yaml
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/10.png)
 
 ---
