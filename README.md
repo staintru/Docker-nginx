@@ -60,8 +60,8 @@ https://hub.docker.com/repository/docker/staint/custom-nginx/general
 
 ### Решение
 
-docker run -d --name "Shevlyakov_AE-custom-nginx-t2" -p 127.0.0.1:8080:80 nginx
-docker rename "Shevlyakov_AE-custom-nginx-t2" custom-nginx-t2
+docker run -d --name "shae-custom-nginx-t2" -p 127.0.0.1:8080:80 nginx
+docker rename "shae-custom-nginx-t2" custom-nginx-t2
 
 ![image](https://github.com/staintru/Docker-nginx/blob/main/3.png)
 
@@ -85,6 +85,8 @@ docker rename "Shevlyakov_AE-custom-nginx-t2" custom-nginx-t2
 ### Решение
 
 ![image](https://github.com/staintru/Docker-nginx/blob/main/4.png)
+
+Контейнер остановился, потому что при нажатии Ctrl+C сигнал прерывания был передан главному процессу в контейнере (nginx), который завершил свою работу. В Docker контейнер живёт только пока работает его основной процесс. 
 
 Сменив внутренний порт в контейнере с 80 на 81 и перечитав конфигурацию NGINX начал работать на новом 81 порту в контейнере, но мапинг внешнего 8080 порта мы не меняли, он по прежнему ссылается на 80 порт а там ничего нет.
 
@@ -160,6 +162,14 @@ services:
 ### Решение
 
 ![image](https://github.com/staintru/Docker-nginx/blob/main/8.png)
+
+Здесь был запущен файл compose.yaml, потому что Docker Compose ищет файлы в следующем порядке приоритета:
+compose.yaml
+compose.yml
+docker-compose.yaml
+docker-compose.yml
+Поскольку compose.yaml найден первым, он и был использован.
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/9.png)
 ![image](https://github.com/staintru/Docker-nginx/blob/main/11.png)
 
@@ -167,7 +177,11 @@ services:
 В современном Docker Compose (команда docker compose без дефиса) это поле больше не нужно. Docker Compose сам определяет спецификацию автоматически по структуре файла. Если поле version осталось — оно просто игнорируется, но при каждом запуске выводится это предупреждение .
 Нужно просто удалить строку version: '...' из файла docker-compose.yaml
 
+Смысл предупреждения "Found orphan containers (netology-portainer-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up" в том, что найдены контейнеры, которые не описаны в файле. Для их очистки нужно выполнить ту же команду с флагом --remove-orphans.
+
+
 ![image](https://github.com/staintru/Docker-nginx/blob/main/10.png)
+
 
 ---
 
